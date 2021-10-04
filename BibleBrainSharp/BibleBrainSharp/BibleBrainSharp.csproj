@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <LangVersion>7.3</LangVersion>
+  </PropertyGroup>
+	
+  <PropertyGroup>
+    <PackageId>BibleBrainSharp</PackageId>
+    <PackageVersion>0.1.0-beta</PackageVersion>
+    <Title>BibleBrainSharp</Title>
+    <Authors>markivan.basto</Authors>
+    <Description>C# Wrapper for the Bible Brain API</Description>
+    <Copyright>(c) 2021 Mark Ivan Basto</Copyright>
+    <PackageProjectUrl>https://github.com/MarkIvanDev/BibleBrainSharp</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/MarkIvanDev/BibleBrainSharp.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageTags>bible brain developer api wrapper c#</PackageTags>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+  </ItemGroup>
+
+</Project>
