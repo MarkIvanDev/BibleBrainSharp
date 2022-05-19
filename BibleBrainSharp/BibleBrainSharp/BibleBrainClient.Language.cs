@@ -43,7 +43,7 @@ namespace BibleBrainSharp
             LanguagesResult response;
             do
             {
-                response = await httpClient.ExecuteAsync<LanguagesResult>(request);
+                response = await httpClient.ExecuteAsync<LanguagesResult>(request).ConfigureAwait(false);
                 if (response is null) break;
 
                 languages.AddRange(response.Data);
@@ -56,7 +56,7 @@ namespace BibleBrainSharp
         public async Task<LanguageInfoResult> GetLanguage(int languageId)
         {
             var request = new HttpRequest(ApiEndpoints.GetLanguage(languageId));
-            var response = await httpClient.ExecuteAsync<LanguageInfoResult>(request);
+            var response = await httpClient.ExecuteAsync<LanguageInfoResult>(request).ConfigureAwait(false);
             return response;
         }
     }
