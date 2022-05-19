@@ -34,14 +34,14 @@ namespace BibleBrainSharp
         public async Task<IList<FileSetId>> GetFileSetsWithTimestamps()
         {
             var request = new HttpRequest(ApiEndpoints.Timestamps);
-            var response = await httpClient.ExecuteAsync<FileSetId[]>(request);
+            var response = await httpClient.ExecuteAsync<FileSetId[]>(request).ConfigureAwait(false);
             return response;
         }
 
         public async Task<TimestampsResult> GetTimestamps(string fileSetId, string bookId, int chapter)
         {
             var request = new HttpRequest(ApiEndpoints.GetTimestamps(fileSetId, bookId, chapter));
-            var response = await httpClient.ExecuteAsync<TimestampsResult>(request);
+            var response = await httpClient.ExecuteAsync<TimestampsResult>(request).ConfigureAwait(false);
             return response;
         }
 

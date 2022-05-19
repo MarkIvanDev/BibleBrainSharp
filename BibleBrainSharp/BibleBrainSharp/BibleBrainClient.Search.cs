@@ -43,7 +43,7 @@ namespace BibleBrainSharp
             Search response;
             do
             {
-                response = await httpClient.ExecuteAsync<Search>(request);
+                response = await httpClient.ExecuteAsync<Search>(request).ConfigureAwait(false);
                 if (response is null) break;
 
                 searches.Add(response);

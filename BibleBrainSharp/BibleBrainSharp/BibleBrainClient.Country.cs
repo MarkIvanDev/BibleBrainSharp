@@ -40,7 +40,7 @@ namespace BibleBrainSharp
             CountriesResult response;
             do
             {
-                response = await httpClient.ExecuteAsync<CountriesResult>(request);
+                response = await httpClient.ExecuteAsync<CountriesResult>(request).ConfigureAwait(false);
                 if (response is null) break;
 
                 countries.AddRange(response.Data);
@@ -53,7 +53,7 @@ namespace BibleBrainSharp
         public async Task<CountryInfoResult> GetCountry(string countryId)
         {
             var request = new HttpRequest(ApiEndpoints.GetCountry(countryId));
-            var response = await httpClient.ExecuteAsync<CountryInfoResult>(request);
+            var response = await httpClient.ExecuteAsync<CountryInfoResult>(request).ConfigureAwait(false);
             return response;
         }
     }

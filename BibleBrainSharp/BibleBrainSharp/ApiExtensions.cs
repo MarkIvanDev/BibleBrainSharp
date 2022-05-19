@@ -36,10 +36,10 @@ namespace BibleBrainSharp
         {
             try
             {
-                var response = await client.GetAsync(request.ToString());
+                var response = await client.GetAsync(request.ToString()).ConfigureAwait(false);
                 if (response.IsSuccessStatusCode)
                 {
-                    var json = await response.Content.ReadAsStringAsync();
+                    var json = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                     return JsonConvert.DeserializeObject<T>(json);
                 }
                 return default;

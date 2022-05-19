@@ -33,14 +33,14 @@ namespace BibleBrainSharp
         public async Task<NumbersResult> GetNumbers()
         {
             var request = new HttpRequest(ApiEndpoints.Numbers);
-            var response = await httpClient.ExecuteAsync<NumbersResult>(request);
+            var response = await httpClient.ExecuteAsync<NumbersResult>(request).ConfigureAwait(false);
             return response;
         }
 
         public async Task<NumberInfoResult> GetNumber(string numeralSystem)
         {
             var request = new HttpRequest(ApiEndpoints.GetNumber(numeralSystem));
-            var response = await httpClient.ExecuteAsync<NumberInfoResult>(request);
+            var response = await httpClient.ExecuteAsync<NumberInfoResult>(request).ConfigureAwait(false);
             return response;
         }
 

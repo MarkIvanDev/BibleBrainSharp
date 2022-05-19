@@ -44,7 +44,7 @@ namespace BibleBrainSharp
             BiblesResult response;
             do
             {
-                response = await httpClient.ExecuteAsync<BiblesResult>(request);
+                response = await httpClient.ExecuteAsync<BiblesResult>(request).ConfigureAwait(false);
                 if (response is null) break;
 
                 bibles.AddRange(response.Data);
@@ -57,42 +57,42 @@ namespace BibleBrainSharp
         public async Task<BibleInfoResult> GetBible(string bibleId)
         {
             var request = new HttpRequest(ApiEndpoints.GetBible(bibleId));
-            var response = await httpClient.ExecuteAsync<BibleInfoResult>(request);
+            var response = await httpClient.ExecuteAsync<BibleInfoResult>(request).ConfigureAwait(false);
             return response;
         }
 
         public async Task<BooksResult> GetBooks(string bibleId)
         {
             var request = new HttpRequest(ApiEndpoints.GetBooks(bibleId));
-            var response = await httpClient.ExecuteAsync<BooksResult>(request);
+            var response = await httpClient.ExecuteAsync<BooksResult>(request).ConfigureAwait(false);
             return response;
         }
 
         public async Task<IList<Copyright>> GetCopyright(string bibleId)
         {
             var request = new HttpRequest(ApiEndpoints.GetCopyright(bibleId));
-            var response = await httpClient.ExecuteAsync<Copyright[]>(request);
+            var response = await httpClient.ExecuteAsync<Copyright[]>(request).ConfigureAwait(false);
             return response;
         }
 
         public async Task<VersesResult> GetChapter(string fileSetId, string bookId, int chapter)
         {
             var request = new HttpRequest(ApiEndpoints.GetChapter(fileSetId, bookId, chapter));
-            var response = await httpClient.ExecuteAsync<VersesResult>(request);
+            var response = await httpClient.ExecuteAsync<VersesResult>(request).ConfigureAwait(false);
             return response;
         }
 
         public async Task<IDictionary<string, DefaultBible>> GetDefaultBibles()
         {
             var request = new HttpRequest(ApiEndpoints.DefaultBibles);
-            var response = await httpClient.ExecuteAsync<Dictionary<string, DefaultBible>>(request);
+            var response = await httpClient.ExecuteAsync<Dictionary<string, DefaultBible>>(request).ConfigureAwait(false);
             return response;
         }
 
         public async Task<IDictionary<MediaType, string>> GetMediaTypes()
         {
             var request = new HttpRequest(ApiEndpoints.MediaTypes);
-            var response = await httpClient.ExecuteAsync<Dictionary<MediaType, string>>(request);
+            var response = await httpClient.ExecuteAsync<Dictionary<MediaType, string>>(request).ConfigureAwait(false);
             return response;
         }
     }
