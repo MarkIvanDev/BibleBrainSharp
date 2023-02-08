@@ -8,7 +8,7 @@
 	
   <PropertyGroup>
     <PackageId>BibleBrainSharp</PackageId>
-    <PackageVersion>0.3.0-beta</PackageVersion>
+    <PackageVersion>1.0.0-dev.1</PackageVersion>
     <Title>BibleBrainSharp</Title>
     <Authors>markivan.basto</Authors>
     <Description>Unofficial C# Wrapper for the Bible Brain API</Description>
