@@ -1,28 +1,5 @@
-﻿// MIT License
-
-// Copyright(c) 2021 Mark Ivan Basto
-
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-// copies of the Software, and to permit persons to whom the Software is
-// furnished to do so, subject to the following conditions:
-
-// The above copyright notice and this permission notice shall be included in all
-// copies or substantial portions of the Software.
-
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-// SOFTWARE.
-
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using BibleBrainSharp.Models;
 
@@ -30,30 +7,94 @@ namespace BibleBrainSharp
 {
     public partial class BibleBrainClient
     {
-        public async Task<IList<Country>> GetCountries(string l10n = default, bool? include_languages = default)
+        public async Task<IList<Country>> GetCountries(string? l10n = null, bool? include_languages = null)
         {
             var countries = new List<Country>();
             var request = new HttpRequest(ApiEndpoints.Countries);
             request.Query.AddOptionalParameter(nameof(l10n), l10n);
             request.Query.AddOptionalParameter(nameof(include_languages), include_languages);
 
-            CountriesResult response;
+            int currentPage;
+            int totalPages;
             do
             {
-                response = await httpClient.ExecuteAsync<CountriesResult>(request).ConfigureAwait(false);
+                var response = await httpClient.ExecuteAsync<CountriesResult>(request).ConfigureAwait(false);
                 if (response is null) break;
 
-                countries.AddRange(response.Data);
-                request.Query.Set("page", (response.Meta.Pagination.CurrentPage + 1).ToString());
-            } while (response.Meta.Pagination.CurrentPage < response.Meta.Pagination.TotalPages);
-            
+                countries.AddRange(response.Data ?? Array.Empty<Country>());
+
+                var cp = response.Meta?.Pagination?.CurrentPage;
+                var tp = response.Meta?.Pagination?.TotalPages;
+                if (cp.HasValue && tp.HasValue)
+                {
+                    currentPage = cp.Value;
+                    totalPages = tp.Value;
+                    request.Query.Set("page", (currentPage + 1).ToString());
+                }
+                else
+                {
+                    break;
+                }
+            } while (currentPage < totalPages);
+
             return countries;
         }
 
-        public async Task<CountryInfoResult> GetCountry(string countryId)
+        public async Task<CountriesResult?> GetCountriesPaginated(int page, string? l10n = null, bool? include_languages = null, int? limit = null)
+        {
+            var request = new HttpRequest(ApiEndpoints.Countries);
+            request.Query.AddRequiredParameter(nameof(page), page);
+            request.Query.AddOptionalParameter(nameof(l10n), l10n);
+            request.Query.AddOptionalParameter(nameof(include_languages), include_languages);
+            request.Query.AddOptionalParameter(nameof(limit), limit);
+            var response = await httpClient.ExecuteAsync<CountriesResult>(request).ConfigureAwait(false);
+            return response;
+        }
+
+        public async Task<CountryInfoResult?> GetCountry(string countryId)
         {
             var request = new HttpRequest(ApiEndpoints.GetCountry(countryId));
             var response = await httpClient.ExecuteAsync<CountryInfoResult>(request).ConfigureAwait(false);
+            return response;
+        }
+
+        public async Task<IList<CountrySearch>> SearchCountries(string searchText)
+        {
+            var countries = new List<CountrySearch>();
+            var request = new HttpRequest(ApiEndpoints.GetCountrySearch(searchText));
+
+            int currentPage;
+            int totalPages;
+            do
+            {
+                var response = await httpClient.ExecuteAsync<CountrySearchResult>(request).ConfigureAwait(false);
+                if (response is null) break;
+
+                countries.AddRange(response.Data ?? Array.Empty<CountrySearch>());
+
+                var cp = response.Meta?.Pagination?.CurrentPage;
+                var tp = response.Meta?.Pagination?.TotalPages;
+                if (cp.HasValue && tp.HasValue)
+                {
+                    currentPage = cp.Value;
+                    totalPages = tp.Value;
+                    request.Query.Set("page", (currentPage + 1).ToString());
+                }
+                else
+                {
+                    break;
+                }
+            } while (currentPage < totalPages);
+
+            return countries;
+        }
+
+        public async Task<CountrySearchResult?> SearchCountriesPaginated(int page, string searchText, int? limit = null)
+        {
+            var request = new HttpRequest(ApiEndpoints.GetCountrySearch(searchText));
+            request.Query.AddRequiredParameter(nameof(page), page);
+            request.Query.AddOptionalParameter(nameof(limit), limit);
+            var response = await httpClient.ExecuteAsync<CountrySearchResult>(request).ConfigureAwait(false);
             return response;
         }
     }
