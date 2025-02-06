@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace BibleBrainSharp.Models
 {
@@ -45,7 +45,7 @@ namespace BibleBrainSharp.Models
 
         public string? Glyph { get; set; }
 
-        [JsonProperty("numeral_written")]
+        [JsonPropertyName("numeral_written")]
         public string? NumeralWritten { get; set; }
     }
 

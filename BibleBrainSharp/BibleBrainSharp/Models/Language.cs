@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace BibleBrainSharp.Models
 {
@@ -14,7 +14,7 @@ namespace BibleBrainSharp.Models
     {
         public int? Id { get; set; }
 
-        [JsonProperty("glotto_id")]
+        [JsonPropertyName("glotto_id")]
         public string? GlottoId { get; set; }
 
         public string? Iso { get; set; }
@@ -39,13 +39,13 @@ namespace BibleBrainSharp.Models
 
         public int? Count { get; set; }
 
-        [JsonProperty("per_page")]
+        [JsonPropertyName("per_page")]
         public int? PerPage { get; set; }
 
-        [JsonProperty("current_page")]
+        [JsonPropertyName("current_page")]
         public int? CurrentPage { get; set; }
 
-        [JsonProperty("total_pages")]
+        [JsonPropertyName("total_pages")]
         public int? TotalPages { get; set; }
 
         public LanguagesResultMetadataPaginationLinks? Links { get; set; }
@@ -73,7 +73,7 @@ namespace BibleBrainSharp.Models
 
         public string? Autonym { get; set; }
 
-        [JsonProperty("glotto_id")]
+        [JsonPropertyName("glotto_id")]
         public string? GlottoId { get; set; }
 
         public string? Iso { get; set; }
@@ -84,10 +84,10 @@ namespace BibleBrainSharp.Models
 
         public int? Population { get; set; }
 
-        [JsonProperty("country_id")]
+        [JsonPropertyName("country_id")]
         public string? CountryId { get; set; }
 
-        [JsonProperty("country_name")]
+        [JsonPropertyName("country_name")]
         public string? CountryName { get; set; }
 
         public object? AlternativeNames { get; set; }
@@ -104,12 +104,12 @@ namespace BibleBrainSharp.Models
     {
         public string? Id { get; set; }
 
-        [JsonProperty("language_id")]
+        [JsonPropertyName("language_id")]
         public int? LanguageId { get; set; }
 
         public BibleVersification? Versification { get; set; }
 
-        [JsonProperty("numeral_system_id")]
+        [JsonPropertyName("numeral_system_id")]
         public string? NumeralSystemId { get; set; }
 
         public string? Scope { get; set; }
@@ -129,15 +129,15 @@ namespace BibleBrainSharp.Models
 
     public class LanguageInfoBibleTranslation
     {
-        [JsonProperty("language_id")]
+        [JsonPropertyName("language_id")]
         public int? LanguageId { get; set; }
 
-        [JsonProperty("bible_id")]
+        [JsonPropertyName("bible_id")]
         public string? BibleId { get; set; }
 
         public int? Vernacular { get; set; }
 
-        [JsonProperty("vernacular_trade")]
+        [JsonPropertyName("vernacular_trade")]
         public int? VernacularTrade { get; set; }
 
         public string? Name { get; set; }
@@ -149,16 +149,16 @@ namespace BibleBrainSharp.Models
     {
         public string? Id { get; set; }
 
-        [JsonProperty("asset_id")]
+        [JsonPropertyName("asset_id")]
         public string? AssetId { get; set; }
 
-        [JsonProperty("set_type_code")]
+        [JsonPropertyName("set_type_code")]
         public string? SetTypeCode { get; set; }
 
-        [JsonProperty("set_size_code")]
+        [JsonPropertyName("set_size_code")]
         public string? SetSizeCode { get; set; }
 
-        [JsonProperty("laravel_through_key")]
+        [JsonPropertyName("laravel_through_key")]
         public string? LaravelThroughKey { get; set; }
 
         public LanguageInfoBibleFilesetMetadata[]? Meta { get; set; }
@@ -166,7 +166,7 @@ namespace BibleBrainSharp.Models
 
     public class LanguageInfoBibleFilesetMetadata
     {
-        [JsonProperty("hash_id")]
+        [JsonPropertyName("hash_id")]
         public string? HashId { get; set; }
 
         public string? Name { get; set; }
@@ -175,7 +175,7 @@ namespace BibleBrainSharp.Models
 
         public string? Iso { get; set; }
 
-        [JsonProperty("language_id")]
+        [JsonPropertyName("language_id")]
         public int? LanguageId { get; set; }
     }
 
@@ -183,20 +183,20 @@ namespace BibleBrainSharp.Models
     {
         public int? Id { get; set; }
 
-        [JsonProperty("language_id")]
+        [JsonPropertyName("language_id")]
         public int? LanguageId { get; set; }
 
         public string? Iso { get; set; }
 
-        [JsonProperty("organization_id")]
+        [JsonPropertyName("organization_id")]
         public int? OrganizationId { get; set; }
 
-        [JsonProperty("source_id")]
+        [JsonPropertyName("source_id")]
         public string? SourceId { get; set; }
 
         public string? Cover { get; set; }
 
-        [JsonProperty("cover_thumbnail")]
+        [JsonPropertyName("cover_thumbnail")]
         public string? CoverThumbnail { get; set; }
 
         public string? Type { get; set; }
@@ -208,7 +208,7 @@ namespace BibleBrainSharp.Models
 
     public class LanguageInfoResourceTranslation
     {
-        [JsonProperty("language_id")]
+        [JsonPropertyName("language_id")]
         public int? LanguageId { get; set; }
 
         public string? Title { get; set; }
@@ -236,7 +236,7 @@ namespace BibleBrainSharp.Models
     {
         public int? Id { get; set; }
 
-        [JsonProperty("glotto_id")]
+        [JsonPropertyName("glotto_id")]
         public string? GlottoId { get; set; }
 
         public string? Iso { get; set; }
@@ -259,13 +259,13 @@ namespace BibleBrainSharp.Models
 
         public int? Count { get; set; }
 
-        [JsonProperty("per_page")]
+        [JsonPropertyName("per_page")]
         public int? PerPage { get; set; }
 
-        [JsonProperty("current_page")]
+        [JsonPropertyName("current_page")]
         public int? CurrentPage { get; set; }
 
-        [JsonProperty("total_pages")]
+        [JsonPropertyName("total_pages")]
         public int? TotalPages { get; set; }
     }
 }

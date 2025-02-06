@@ -1,10 +1,10 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace BibleBrainSharp.Models
 {
     public class SearchResult
     {
-        [JsonProperty("audio_filesets")]
+        [JsonPropertyName("audio_filesets")]
         public SearchAudioFileset[]? AudioFilesets { get; set; }
 
         public VersesResult? Verses { get; set; }
@@ -14,16 +14,16 @@ namespace BibleBrainSharp.Models
     {
         public string? Id { get; set; }
 
-        [JsonProperty("asset_id")]
+        [JsonPropertyName("asset_id")]
         public string? AssetId { get; set; }
 
-        [JsonProperty("set_type_code")]
+        [JsonPropertyName("set_type_code")]
         public MediaType? SetTypeCode { get; set; }
 
-        [JsonProperty("set_size_code")]
+        [JsonPropertyName("set_size_code")]
         public string? SetSizeCode { get; set; }
 
-        [JsonProperty("laravel_through_key")]
+        [JsonPropertyName("laravel_through_key")]
         public string? LaravelThroughKey { get; set; }
 
         public SearchAudioFilesetMetadata[]? Meta { get; set; }
@@ -39,7 +39,7 @@ namespace BibleBrainSharp.Models
 
         public string? Iso { get; set; }
 
-        [JsonProperty("language_id")]
+        [JsonPropertyName("language_id")]
         public int? LanguageId { get; set; }
     }
 }
