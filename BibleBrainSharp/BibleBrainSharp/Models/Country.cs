@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace BibleBrainSharp.Models
 {
@@ -14,7 +14,7 @@ namespace BibleBrainSharp.Models
     {
         public string? Name { get; set; }
 
-        [JsonProperty("continent_code")]
+        [JsonPropertyName("continent_code")]
         public string? ContinentCode { get; set; }
 
         public CountryCodes? Codes { get; set; }
@@ -24,10 +24,10 @@ namespace BibleBrainSharp.Models
     {
         public string? Fips { get; set; }
 
-        [JsonProperty("iso_a3")]
+        [JsonPropertyName("iso_a3")]
         public string? IsoA3 { get; set; }
 
-        [JsonProperty("iso_a2")]
+        [JsonPropertyName("iso_a2")]
         public string? IsoA2 { get; set; }
     }
 
@@ -42,13 +42,13 @@ namespace BibleBrainSharp.Models
 
         public int? Count { get; set; }
 
-        [JsonProperty("per_page")]
+        [JsonPropertyName("per_page")]
         public int? PerPage { get; set; }
 
-        [JsonProperty("current_page")]
+        [JsonPropertyName("current_page")]
         public int? CurrentPage { get; set; }
 
-        [JsonProperty("total_pages")]
+        [JsonPropertyName("total_pages")]
         public int? TotalPages { get; set; }
 
         public CountriesResultMetadataPaginationLinks? Links { get; set; }
@@ -72,7 +72,7 @@ namespace BibleBrainSharp.Models
 
         public string? Introduction { get; set; }
 
-        [JsonProperty("continent_code")]
+        [JsonPropertyName("continent_code")]
         public string? ContinentCode { get; set; }
 
         [JsonConverter(typeof(DictionaryOrEmptyArrayConverter<string, CountryInfoMap>))]
@@ -89,10 +89,10 @@ namespace BibleBrainSharp.Models
 
     public class CountryInfoMap
     {
-        [JsonProperty("thumbnail_url")]
+        [JsonPropertyName("thumbnail_url")]
         public string? ThumbnailUrl { get; set; }
 
-        [JsonProperty("map_url")]
+        [JsonPropertyName("map_url")]
         public string? MapUrl { get; set; }
     }
 
@@ -126,10 +126,10 @@ namespace BibleBrainSharp.Models
     {
         public string? Fips { get; set; }
 
-        [JsonProperty("iso_a3")]
+        [JsonPropertyName("iso_a3")]
         public string? IsoA3 { get; set; }
 
-        [JsonProperty("iso_a2")]
+        [JsonPropertyName("iso_a2")]
         public string? IsoA2 { get; set; }
     }
 
@@ -144,13 +144,13 @@ namespace BibleBrainSharp.Models
 
         public int? Count { get; set; }
 
-        [JsonProperty("per_page")]
+        [JsonPropertyName("per_page")]
         public int? PerPage { get; set; }
 
-        [JsonProperty("current_page")]
+        [JsonPropertyName("current_page")]
         public int? CurrentPage { get; set; }
 
-        [JsonProperty("total_pages")]
+        [JsonPropertyName("total_pages")]
         public int? TotalPages { get; set; }
     }
 }

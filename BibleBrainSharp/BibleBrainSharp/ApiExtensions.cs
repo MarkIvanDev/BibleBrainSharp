@@ -3,8 +3,8 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text.Json;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 
 namespace BibleBrainSharp
 {
@@ -18,11 +18,14 @@ namespace BibleBrainSharp
                 if (response.IsSuccessStatusCode)
                 {
                     var json = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    return JsonConvert.DeserializeObject<T>(json);
+                    return JsonSerializer.Deserialize<T>(json, new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true,
+                    });
                 }
                 return default;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return default;
             }

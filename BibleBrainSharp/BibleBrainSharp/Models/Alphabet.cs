@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
+﻿using System.Text.Json.Serialization;
 
 namespace BibleBrainSharp.Models
 {
@@ -32,37 +31,37 @@ namespace BibleBrainSharp.Models
 
         public string? Name { get; set; }
 
-        [JsonProperty("unicode_pdf")]
+        [JsonPropertyName("unicode_pdf")]
         public string? UnicodePdf { get; set; }
 
         public string? Family { get; set; }
 
         public string? Type { get; set; }
 
-        [JsonProperty("white_space")]
+        [JsonPropertyName("white_space")]
         public string? Whitespace { get; set; }
 
-        [JsonProperty("open_type_tag")]
+        [JsonPropertyName("open_type_tag")]
         public string? OpenTypeTag { get; set; }
 
-        [JsonProperty("complex_positioning")]
+        [JsonPropertyName("complex_positioning")]
         public bool? ComplexPositioning { get; set; }
 
-        [JsonProperty("requires_font")]
+        [JsonPropertyName("requires_font")]
         public bool? RequiresFont { get; set; }
 
         public bool? Unicode { get; set; }
 
         public bool? Diacritics { get; set; }
 
-        [JsonProperty("contextual_forms")]
+        [JsonPropertyName("contextual_forms")]
         public bool? ContextualForms { get; set; }
 
         public bool? Reordering { get; set; }
 
         public bool? Case { get; set; }
 
-        [JsonProperty("split_graphs")]
+        [JsonPropertyName("split_graphs")]
         public bool? SplitGraphs { get; set; }
 
         public AlphabetStatus? Status { get; set; }
@@ -73,12 +72,12 @@ namespace BibleBrainSharp.Models
 
         public AlphabetDirection? Direction { get; set; }
 
-        [JsonProperty("direction_notes")]
+        [JsonPropertyName("direction_notes")]
         public string? DirectionNotes { get; set; }
 
         public string? Sample { get; set; }
 
-        [JsonProperty("sample_img")]
+        [JsonPropertyName("sample_img")]
         public string? SampleImage { get; set; }
 
         public string? Description { get; set; }
@@ -90,7 +89,7 @@ namespace BibleBrainSharp.Models
         public AlphabetBible[]? Bibles { get; set; }
     }
 
-    [JsonConverter(typeof(StringEnumConverter))]
+    [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum AlphabetStatus
     {
         Current,
@@ -99,7 +98,7 @@ namespace BibleBrainSharp.Models
         Unclear,
     }
 
-    [JsonConverter(typeof(StringEnumConverter))]
+    [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum AlphabetBaseline
     {
         Hanging,
@@ -108,7 +107,7 @@ namespace BibleBrainSharp.Models
         Vertical,
     }
 
-    [JsonConverter(typeof(StringEnumConverter))]
+    [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum AlphabetLigature
     {
         None,
@@ -139,7 +138,7 @@ namespace BibleBrainSharp.Models
     {
         public int? Id { get; set; }
 
-        [JsonProperty("glotto_id")]
+        [JsonPropertyName("glotto_id")]
         public string? GlottoId { get; set; }
 
         public string? Iso { get; set; }
@@ -164,7 +163,7 @@ namespace BibleBrainSharp.Models
 
         public int? Population { get; set; }
 
-        [JsonProperty("population_notes")]
+        [JsonPropertyName("population_notes")]
         public string? PopulationNotes { get; set; }
 
         public string? Notes { get; set; }
@@ -177,16 +176,16 @@ namespace BibleBrainSharp.Models
 
         public double? Longitude { get; set; }
 
-        [JsonProperty("status_id")]
+        [JsonPropertyName("status_id")]
         public string? StatusId { get; set; }
 
-        [JsonProperty("country_id")]
+        [JsonPropertyName("country_id")]
         public string? CountryId { get; set; }
 
-        [JsonProperty("created_at")]
+        [JsonPropertyName("created_at")]
         public string? CreatedAt { get; set; }
 
-        [JsonProperty("updated_at")]
+        [JsonPropertyName("updated_at")]
         public string? UpdatedAt { get; set; }
 
         public AlphabetLanguagePivot? Pivot { get; set; }
@@ -194,10 +193,10 @@ namespace BibleBrainSharp.Models
 
     public class AlphabetLanguagePivot
     {
-        [JsonProperty("script_id")]
+        [JsonPropertyName("script_id")]
         public string? ScriptId { get; set; }
 
-        [JsonProperty("language_id")]
+        [JsonPropertyName("language_id")]
         public int? LanguageId { get; set; }
     }
 
@@ -205,12 +204,12 @@ namespace BibleBrainSharp.Models
     {
         public string? Id { get; set; }
 
-        [JsonProperty("language_id")]
+        [JsonPropertyName("language_id")]
         public int? LanguageId { get; set; }
 
         public BibleVersification? Versification { get; set; }
 
-        [JsonProperty("numeral_system_id")]
+        [JsonPropertyName("numeral_system_id")]
         public string? NumeralSystemId { get; set; }
 
         public string? Date { get; set; }
@@ -227,21 +226,21 @@ namespace BibleBrainSharp.Models
 
         public string? Notes { get; set; }
 
-        [JsonProperty("current_translation")]
+        [JsonPropertyName("current_translation")]
         public AlphabetBibleTranslation? CurrentTranslation { get; set; }
     }
 
     public class AlphabetBibleTranslation
     {
-        [JsonProperty("language_id")]
+        [JsonPropertyName("language_id")]
         public int? LanguageId { get; set; }
 
-        [JsonProperty("bible_id")]
+        [JsonPropertyName("bible_id")]
         public string? BibleId { get; set; }
 
         public int? Vernacular { get; set; }
 
-        [JsonProperty("vernacular_trade")]
+        [JsonPropertyName("vernacular_trade")]
         public int? VernacularTrade { get; set; }
 
         public string? Name { get; set; }

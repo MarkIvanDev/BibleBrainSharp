@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace BibleBrainSharp.Models
 {
@@ -13,16 +13,16 @@ namespace BibleBrainSharp.Models
 
         public string? Chapter { get; set; }
 
-        [JsonProperty("verse_start")]
+        [JsonPropertyName("verse_start")]
         public string? VerseStart { get; set; }
 
-        [JsonProperty("timestamp")]
+        [JsonPropertyName("timestamp")]
         public double? TimestampInfo { get; set; }
     }
 
     public class FilesetId
     {
-        [JsonProperty("fileset_id")]
+        [JsonPropertyName("fileset_id")]
         public string? Id { get; set; }
     }
 }
