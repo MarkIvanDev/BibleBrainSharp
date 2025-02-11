@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace BibleBrainSharp.Models
@@ -68,6 +69,21 @@ namespace BibleBrainSharp.Models
     }
 
     [JsonConverter(typeof(JsonStringEnumConverter))]
+    public enum FilesetSize
+    {
+        C,
+        OT,
+        NT,
+        OTP,
+        NTP,
+        OTNTP,
+        NTOTP,
+        NTPOTP,
+        S,
+        P,
+    }
+
+    [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum BookTestament
     {
         OT,
@@ -77,9 +93,9 @@ namespace BibleBrainSharp.Models
 
     public static class EnumExtensions
     {
-        public static string GetValue(this MediaType mediaType)
+        public static string GetValue<T>(this T e) where T : struct, Enum
         {
-            return JsonSerializer.Serialize(mediaType).Trim('\"');
+            return JsonSerializer.Serialize(e).Trim('\"');
         }
     }
 
@@ -188,9 +204,9 @@ namespace BibleBrainSharp.Models
     {
         public string? Id { get; set; }
 
-        public string? Type { get; set; }
+        public MediaType? Type { get; set; }
 
-        public string? Size { get; set; }
+        public FilesetSize? Size { get; set; }
 
         [JsonPropertyName("stock_no")]
         public string? StockNo { get; set; }

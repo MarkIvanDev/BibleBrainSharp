@@ -224,7 +224,7 @@ namespace BibleBrainSharp.Models
 
         public MediaType? Type { get; set; }
 
-        public string? Size { get; set; }
+        public FilesetSize? Size { get; set; }
 
         [JsonPropertyName("copyright")]
         public CopyrightInfo? CopyrightInfo { get; set; }
@@ -292,10 +292,10 @@ namespace BibleBrainSharp.Models
         public string? FilesetId { get; set; }
 
         [JsonPropertyName("fileset_set_type_code")]
-        public string? FilesetSetTypeCode { get; set; }
+        public MediaType? FilesetSetTypeCode { get; set; }
 
         [JsonPropertyName("fileset_set_size_code")]
-        public string? FilesetSetSizeCode { get; set; }
+        public FilesetSize? FilesetSetSizeCode { get; set; }
 
         public VerseByLanguageBibleFileset[]? BibleFilesets { get; set; }
     }
@@ -308,10 +308,10 @@ namespace BibleBrainSharp.Models
         public string? AssetId { get; set; }
 
         [JsonPropertyName("set_type_code")]
-        public string? SetTypeCode { get; set; }
+        public MediaType? SetTypeCode { get; set; }
 
         [JsonPropertyName("set_size_code")]
-        public string? SetSizeCode { get; set; }
+        public FilesetSize? SetSizeCode { get; set; }
     }
 
     public class VerseByLanguageResultMetadata
@@ -377,10 +377,10 @@ namespace BibleBrainSharp.Models
         public string? FilesetId { get; set; }
 
         [JsonPropertyName("fileset_set_type_code")]
-        public string? FilesetSetTypeCode { get; set; }
+        public MediaType? FilesetSetTypeCode { get; set; }
 
         [JsonPropertyName("fileset_set_size_code")]
-        public string? FilesetSetSizeCode { get; set; }
+        public FilesetSize? FilesetSetSizeCode { get; set; }
 
         public VerseByVersionBibleFileset[]? BibleFilesets { get; set; }
     }
@@ -393,10 +393,10 @@ namespace BibleBrainSharp.Models
         public string? AssetId { get; set; }
 
         [JsonPropertyName("set_type_code")]
-        public string? SetTypeCode { get; set; }
+        public MediaType? SetTypeCode { get; set; }
 
         [JsonPropertyName("set_size_code")]
-        public string? SetSizeCode { get; set; }
+        public FilesetSize? SetSizeCode { get; set; }
     }
 
     public class VerseByVersionResultMetadata
