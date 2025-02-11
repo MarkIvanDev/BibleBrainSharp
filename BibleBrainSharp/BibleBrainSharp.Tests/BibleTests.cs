@@ -13,7 +13,7 @@ public class BibleTests
     public async Task GetBiblesPaginated()
     {
         var bibles = await Client.ApiClient.GetBiblesPaginated(1);
-        Assert.NotNull(bibles);
+        Assert.NotNull(bibles?.Data);
     }
 
     [Fact]
@@ -40,6 +40,7 @@ public class BibleTests
     public async Task GetCopyright()
     {
         var copyright = await Client.ApiClient.GetCopyright("ENGKJV");
+        Assert.NotNull(copyright);
         Assert.NotEmpty(copyright);
     }
 

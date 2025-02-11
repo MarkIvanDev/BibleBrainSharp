@@ -21,7 +21,7 @@ namespace BibleBrainSharp.Models
         public MediaType? SetTypeCode { get; set; }
 
         [JsonPropertyName("set_size_code")]
-        public string? SetSizeCode { get; set; }
+        public FilesetSize? SetSizeCode { get; set; }
 
         [JsonPropertyName("laravel_through_key")]
         public string? LaravelThroughKey { get; set; }

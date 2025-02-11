@@ -112,7 +112,7 @@ namespace BibleBrainSharp.Models
         [JsonPropertyName("numeral_system_id")]
         public string? NumeralSystemId { get; set; }
 
-        public string? Scope { get; set; }
+        public FilesetSize? Scope { get; set; }
 
         public string? Script { get; set; }
 
@@ -153,10 +153,10 @@ namespace BibleBrainSharp.Models
         public string? AssetId { get; set; }
 
         [JsonPropertyName("set_type_code")]
-        public string? SetTypeCode { get; set; }
+        public MediaType? SetTypeCode { get; set; }
 
         [JsonPropertyName("set_size_code")]
-        public string? SetSizeCode { get; set; }
+        public FilesetSize? SetSizeCode { get; set; }
 
         [JsonPropertyName("laravel_through_key")]
         public string? LaravelThroughKey { get; set; }

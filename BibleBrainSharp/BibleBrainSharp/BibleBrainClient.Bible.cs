@@ -7,7 +7,7 @@ namespace BibleBrainSharp
 {
     public partial class BibleBrainClient
     {
-        public async Task<IList<Bible>> GetBibles(string? language_code = null, string? asset_id = null, MediaType? media = null, MediaType? media_exclude = null, string? size = null, string? size_exclude = null)
+        public async Task<IList<Bible>> GetBibles(string? language_code = null, string? asset_id = null, MediaType? media = null, MediaType? media_exclude = null, FilesetSize? size = null, FilesetSize? size_exclude = null)
         {
             var bibles = new List<Bible>();
             var request = new HttpRequest(ApiEndpoints.Bibles);
@@ -15,8 +15,8 @@ namespace BibleBrainSharp
             request.Query.AddOptionalParameter(nameof(asset_id), asset_id);
             request.Query.AddOptionalParameter(nameof(media), media?.GetValue());
             request.Query.AddOptionalParameter(nameof(media_exclude), media_exclude?.GetValue());
-            request.Query.AddOptionalParameter(nameof(size), size);
-            request.Query.AddOptionalParameter(nameof(size_exclude), size_exclude);
+            request.Query.AddOptionalParameter(nameof(size), size?.GetValue());
+            request.Query.AddOptionalParameter(nameof(size_exclude), size_exclude?.GetValue());
 
             int currentPage;
             int lastPage;
@@ -44,7 +44,7 @@ namespace BibleBrainSharp
             return bibles;
         }
 
-        public async Task<BiblesResult?> GetBiblesPaginated(int page, string? language_code = null, string? asset_id = null, MediaType? media = null, MediaType? media_exclude = null, string? size = null, string? size_exclude = null, int? limit = null)
+        public async Task<BiblesResult?> GetBiblesPaginated(int page, string? language_code = null, string? asset_id = null, MediaType? media = null, MediaType? media_exclude = null, FilesetSize? size = null, FilesetSize? size_exclude = null, int? limit = null)
         {
             var request = new HttpRequest(ApiEndpoints.Bibles);
             request.Query.AddRequiredParameter(nameof(page), page);
@@ -53,8 +53,8 @@ namespace BibleBrainSharp
             request.Query.AddOptionalParameter(nameof(asset_id), asset_id);
             request.Query.AddOptionalParameter(nameof(media), media?.GetValue());
             request.Query.AddOptionalParameter(nameof(media_exclude), media_exclude?.GetValue());
-            request.Query.AddOptionalParameter(nameof(size), size);
-            request.Query.AddOptionalParameter(nameof(size_exclude), size_exclude);
+            request.Query.AddOptionalParameter(nameof(size), size?.GetValue());
+            request.Query.AddOptionalParameter(nameof(size_exclude), size_exclude?.GetValue());
 
             var response = await httpClient.ExecuteAsync<BiblesResult>(request).ConfigureAwait(false);
             return response;
