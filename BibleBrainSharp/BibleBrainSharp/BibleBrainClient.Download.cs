@@ -38,12 +38,25 @@ namespace BibleBrainSharp
             return filesets;
         }
 
-        public async Task<DownloadableFilesetResult?> GetDownloadableFilesetsPaginated(int page, int? limit = null)
+        private static HttpRequest GetDownloadableFilesetsPaginatedRequest(int page, int? limit = null)
         {
             var request = new HttpRequest(ApiEndpoints.DownloadList);
             request.Query.AddRequiredParameter(nameof(page), page);
             request.Query.AddOptionalParameter(nameof(limit), limit);
+            return request;
+        }
+
+        public async Task<DownloadableFilesetResult?> GetDownloadableFilesetsPaginated(int page, int? limit = null)
+        {
+            var request = GetDownloadableFilesetsPaginatedRequest(page, limit);
             var response = await httpClient.ExecuteAsync<DownloadableFilesetResult>(request).ConfigureAwait(false);
+            return response;
+        }
+
+        public async Task<string?> GetDownloadableFilesetsPaginatedJson(int page, int? limit = null)
+        {
+            var request = GetDownloadableFilesetsPaginatedRequest(page, limit);
+            var response = await httpClient.ExecuteJsonAsync(request).ConfigureAwait(false);
             return response;
         }
 
@@ -51,6 +64,13 @@ namespace BibleBrainSharp
         {
             var request = new HttpRequest(ApiEndpoints.GetDownload(filesetId, bookId, chapter));
             var response = await httpClient.ExecuteAsync<DownloadContentResult>(request).ConfigureAwait(false);
+            return response;
+        }
+
+        public async Task<string?> GetDownloadContentJson(string filesetId, string bookId, int? chapter = null)
+        {
+            var request = new HttpRequest(ApiEndpoints.GetDownload(filesetId, bookId, chapter));
+            var response = await httpClient.ExecuteJsonAsync(request).ConfigureAwait(false);
             return response;
         }
     }

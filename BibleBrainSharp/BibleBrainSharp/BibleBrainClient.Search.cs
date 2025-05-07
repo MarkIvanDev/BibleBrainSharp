@@ -43,7 +43,7 @@ namespace BibleBrainSharp
                     {
                         break;
                     }
-                    
+
                 }
                 else
                 {
@@ -55,7 +55,7 @@ namespace BibleBrainSharp
             return searches;
         }
 
-        public async Task<SearchResult?> SearchPaginated(int page, string query, string fileset_id, string[]? books = null, int limit = 1000)
+        private static HttpRequest SearchPaginatedRequest(int page, string query, string fileset_id, string[]? books = null, int limit = 1000)
         {
             var request = new HttpRequest(ApiEndpoints.Search);
             request.Query.AddRequiredParameter(nameof(page), page);
@@ -63,7 +63,20 @@ namespace BibleBrainSharp
             request.Query.AddRequiredParameter(nameof(fileset_id), fileset_id);
             request.Query.AddRequiredParameter(nameof(limit), limit);
             request.Query.AddOptionalParameter(nameof(books), string.Join(",", books ?? Array.Empty<string>()));
+            return request;
+        }
+
+        public async Task<SearchResult?> SearchPaginated(int page, string query, string fileset_id, string[]? books = null, int limit = 1000)
+        {
+            var request = SearchPaginatedRequest(page, query, fileset_id, books, limit);
             var response = await httpClient.ExecuteAsync<SearchResult>(request).ConfigureAwait(false);
+            return response;
+        }
+
+        public async Task<string?> SearchPaginatedJson(int page, string query, string fileset_id, string[]? books = null, int limit = 1000)
+        {
+            var request = SearchPaginatedRequest(page, query, fileset_id, books, limit);
+            var response = await httpClient.ExecuteJsonAsync(request).ConfigureAwait(false);
             return response;
         }
     }

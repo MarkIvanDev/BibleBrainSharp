@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BibleBrainSharp
 {
-    public static class ApiExtensions
+    internal static class ApiExtensions
     {
         public static async Task<T?> ExecuteAsync<T>(this HttpClient client, HttpRequest request)
         {
@@ -22,6 +22,24 @@ namespace BibleBrainSharp
                     {
                         PropertyNameCaseInsensitive = true,
                     });
+                }
+                return default;
+            }
+            catch (Exception ex)
+            {
+                return default;
+            }
+        }
+
+        public static async Task<string?> ExecuteJsonAsync(this HttpClient client, HttpRequest request)
+        {
+            try
+            {
+                var response = await client.GetAsync(request.ToString()).ConfigureAwait(false);
+                if (response.IsSuccessStatusCode)
+                {
+                    var json = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    return json;
                 }
                 return default;
             }
@@ -70,7 +88,6 @@ namespace BibleBrainSharp
                 }
             }
         }
-
 
         public static string ToQueryString(this NameValueCollection query)
         {

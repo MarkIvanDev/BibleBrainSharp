@@ -12,10 +12,24 @@ namespace BibleBrainSharp
             return response;
         }
 
+        public async Task<string?> GetAlphabetsJson()
+        {
+            var request = new HttpRequest(ApiEndpoints.Alphabets);
+            var response = await httpClient.ExecuteJsonAsync(request).ConfigureAwait(false);
+            return response;
+        }
+
         public async Task<AlphabetInfoResult?> GetAlphabet(string alphabetId)
         {
             var request = new HttpRequest(ApiEndpoints.GetAlphabet(alphabetId));
             var response = await httpClient.ExecuteAsync<AlphabetInfoResult>(request).ConfigureAwait(false);
+            return response;
+        }
+
+        public async Task<string?> GetAlphabetJson(string alphabetId)
+        {
+            var request = new HttpRequest(ApiEndpoints.GetAlphabet(alphabetId));
+            var response = await httpClient.ExecuteJsonAsync(request).ConfigureAwait(false);
             return response;
         }
     }
