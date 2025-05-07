@@ -14,21 +14,21 @@ public class DownloadTests
     [Fact]
     public async Task GetDownloadableFilesets()
     {
-        var filesets = await client.ApiClient.GetDownloadableFilesets();
+        var filesets = await client.ApiClient.GetDownloadableFilesets(TestContext.Current.CancellationToken);
         Assert.NotEmpty(filesets);
     }
 
     [Fact]
     public async Task GetDownloadableFilesetsPaginated()
     {
-        var filesets = await client.ApiClient.GetDownloadableFilesetsPaginated(1);
+        var filesets = await client.ApiClient.GetDownloadableFilesetsPaginated(1, cancellationToken: TestContext.Current.CancellationToken);
         Assert.NotNull(filesets);
     }
 
     [Fact]
     public async Task GetDownloadContent()
     {
-        var contents = await client.ApiClient.GetDownloadContent("ENGKJV", "MAT", 1);
+        var contents = await client.ApiClient.GetDownloadContent("ENGKJV", "MAT", 1, TestContext.Current.CancellationToken);
         Assert.NotNull(contents);
     }
 }

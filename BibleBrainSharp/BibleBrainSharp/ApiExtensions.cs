@@ -4,17 +4,18 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace BibleBrainSharp;
 
 internal static class ApiExtensions
 {
-    public static async Task<T?> ExecuteAsync<T>(this HttpClient client, HttpRequest request)
+    public static async Task<T?> ExecuteAsync<T>(this HttpClient client, HttpRequest request, CancellationToken cancellationToken)
     {
         try
         {
-            var response = await client.GetAsync(request.ToString()).ConfigureAwait(false);
+            var response = await client.GetAsync(request.ToString(), cancellationToken).ConfigureAwait(false);
             if (response.IsSuccessStatusCode)
             {
                 var json = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
@@ -31,11 +32,11 @@ internal static class ApiExtensions
         }
     }
 
-    public static async Task<string?> ExecuteJsonAsync(this HttpClient client, HttpRequest request)
+    public static async Task<string?> ExecuteJsonAsync(this HttpClient client, HttpRequest request, CancellationToken cancellationToken)
     {
         try
         {
-            var response = await client.GetAsync(request.ToString()).ConfigureAwait(false);
+            var response = await client.GetAsync(request.ToString(), cancellationToken).ConfigureAwait(false);
             if (response.IsSuccessStatusCode)
             {
                 var json = await response.Content.ReadAsStringAsync().ConfigureAwait(false);

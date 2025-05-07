@@ -14,14 +14,14 @@ public class NumberTests
     [Fact]
     public async Task GetNumbers()
     {
-        var numbers = await client.ApiClient.GetNumbers();
+        var numbers = await client.ApiClient.GetNumbers(TestContext.Current.CancellationToken);
         Assert.NotNull(numbers);
     }
 
     [Fact]
     public async Task GetNumber()
     {
-        var number = await client.ApiClient.GetNumber("thai");
+        var number = await client.ApiClient.GetNumber("thai", TestContext.Current.CancellationToken);
         Assert.NotNull(number);
     }
 

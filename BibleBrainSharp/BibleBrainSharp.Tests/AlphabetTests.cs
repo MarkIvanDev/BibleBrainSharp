@@ -15,14 +15,14 @@ public class AlphabetTests
     [Fact]
     public async Task GetAlphabets()
     {
-        var alphabets = await client.ApiClient.GetAlphabets();
+        var alphabets = await client.ApiClient.GetAlphabets(TestContext.Current.CancellationToken);
         Assert.NotNull(alphabets);
     }
 
     [Fact]
     public async Task GetAlphabet()
     {
-        var alphabet = await client.ApiClient.GetAlphabet("Latn");
+        var alphabet = await client.ApiClient.GetAlphabet("Latn", TestContext.Current.CancellationToken);
         Assert.NotNull(alphabet);
     }
 }

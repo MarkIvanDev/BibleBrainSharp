@@ -14,14 +14,14 @@ public class TimestampTests
     [Fact]
     public async Task GetFilesetsWithTimestamps()
     {
-        var filesets = await client.ApiClient.GetFilesetsWithTimestamps();
+        var filesets = await client.ApiClient.GetFilesetsWithTimestamps(TestContext.Current.CancellationToken);
         Assert.NotNull(filesets);
     }
 
     [Fact]
     public async Task GetTimestamps()
     {
-        var timestamps = await client.ApiClient.GetTimestamps("ENGKJVO1DA", "GEN", 1);
+        var timestamps = await client.ApiClient.GetTimestamps("ENGKJVO1DA", "GEN", 1, cancellationToken: TestContext.Current.CancellationToken);
         Assert.NotNull(timestamps);
     }
 }
