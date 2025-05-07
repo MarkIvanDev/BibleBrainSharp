@@ -1,57 +1,76 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using BibleBrainSharp.Models;
 
-namespace BibleBrainSharp
+namespace BibleBrainSharp;
+
+public partial class BibleBrainClient
 {
-    public partial class BibleBrainClient
+    public async Task<IList<DownloadableFileset>> GetDownloadableFilesets(CancellationToken cancellationToken = default)
     {
-        public async Task<IList<DownloadableFileset>> GetDownloadableFilesets()
-        {
-            var filesets = new List<DownloadableFileset>();
-            var request = new HttpRequest(ApiEndpoints.DownloadList);
+        var filesets = new List<DownloadableFileset>();
+        var request = new HttpRequest(ApiEndpoints.DownloadList);
 
-            int currentPage;
-            int totalPages;
-            do
+        int currentPage;
+        int totalPages;
+        do
+        {
+            var response = await httpClient.ExecuteAsync<DownloadableFilesetResult>(request, cancellationToken).ConfigureAwait(false);
+            if (response is null) break;
+
+            filesets.AddRange(response.Data ?? []);
+
+            var cp = response.Meta?.Pagination?.CurrentPage;
+            var tp = response.Meta?.Pagination?.TotalPages;
+            if (cp.HasValue && tp.HasValue)
             {
-                var response = await httpClient.ExecuteAsync<DownloadableFilesetResult>(request).ConfigureAwait(false);
-                if (response is null) break;
+                currentPage = cp.Value;
+                totalPages = tp.Value;
+                request.Query.Set("page", (currentPage + 1).ToString());
+            }
+            else
+            {
+                break;
+            }
+        } while (currentPage < totalPages);
 
-                filesets.AddRange(response.Data ?? Array.Empty<DownloadableFileset>());
+        return filesets;
+    }
 
-                var cp = response.Meta?.Pagination?.CurrentPage;
-                var tp = response.Meta?.Pagination?.TotalPages;
-                if (cp.HasValue && tp.HasValue)
-                {
-                    currentPage = cp.Value;
-                    totalPages = tp.Value;
-                    request.Query.Set("page", (currentPage + 1).ToString());
-                }
-                else
-                {
-                    break;
-                }
-            } while (currentPage < totalPages);
+    private static HttpRequest GetDownloadableFilesetsPaginatedRequest(int page, int? limit = null)
+    {
+        var request = new HttpRequest(ApiEndpoints.DownloadList);
+        request.Query.AddRequiredParameter(nameof(page), page);
+        request.Query.AddOptionalParameter(nameof(limit), limit);
+        return request;
+    }
 
-            return filesets;
-        }
+    public async Task<DownloadableFilesetResult?> GetDownloadableFilesetsPaginated(int page, int? limit = null, CancellationToken cancellationToken = default)
+    {
+        var request = GetDownloadableFilesetsPaginatedRequest(page, limit);
+        var response = await httpClient.ExecuteAsync<DownloadableFilesetResult>(request, cancellationToken).ConfigureAwait(false);
+        return response;
+    }
 
-        public async Task<DownloadableFilesetResult?> GetDownloadableFilesetsPaginated(int page, int? limit = null)
-        {
-            var request = new HttpRequest(ApiEndpoints.DownloadList);
-            request.Query.AddRequiredParameter(nameof(page), page);
-            request.Query.AddOptionalParameter(nameof(limit), limit);
-            var response = await httpClient.ExecuteAsync<DownloadableFilesetResult>(request).ConfigureAwait(false);
-            return response;
-        }
+    public async Task<string?> GetDownloadableFilesetsPaginatedJson(int page, int? limit = null, CancellationToken cancellationToken = default)
+    {
+        var request = GetDownloadableFilesetsPaginatedRequest(page, limit);
+        var response = await httpClient.ExecuteJsonAsync(request, cancellationToken).ConfigureAwait(false);
+        return response;
+    }
 
-        public async Task<DownloadContentResult?> GetDownloadContent(string filesetId, string bookId, int? chapter = null)
-        {
-            var request = new HttpRequest(ApiEndpoints.GetDownload(filesetId, bookId, chapter));
-            var response = await httpClient.ExecuteAsync<DownloadContentResult>(request).ConfigureAwait(false);
-            return response;
-        }
+    public async Task<DownloadContentResult?> GetDownloadContent(string filesetId, string bookId, int? chapter = null, CancellationToken cancellationToken = default)
+    {
+        var request = new HttpRequest(ApiEndpoints.GetDownload(filesetId, bookId, chapter));
+        var response = await httpClient.ExecuteAsync<DownloadContentResult>(request, cancellationToken).ConfigureAwait(false);
+        return response;
+    }
+
+    public async Task<string?> GetDownloadContentJson(string filesetId, string bookId, int? chapter = null, CancellationToken cancellationToken = default)
+    {
+        var request = new HttpRequest(ApiEndpoints.GetDownload(filesetId, bookId, chapter));
+        var response = await httpClient.ExecuteJsonAsync(request, cancellationToken).ConfigureAwait(false);
+        return response;
     }
 }
