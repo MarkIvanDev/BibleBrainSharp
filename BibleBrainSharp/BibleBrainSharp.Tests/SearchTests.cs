@@ -2,14 +2,9 @@
 
 namespace BibleBrainSharp.Tests;
 
-public class SearchTests
+public class SearchTests(Client client)
 {
-    private readonly Client client;
-
-    public SearchTests(Client client)
-    {
-        this.client = client;
-    }
+    private readonly Client client = client;
 
     [Fact]
     public async Task Search()
@@ -22,6 +17,13 @@ public class SearchTests
     public async Task SearchPaginated()
     {
         var searches = await client.ApiClient.SearchPaginated(1, "love", "ENGKJV", cancellationToken: TestContext.Current.CancellationToken);
+        Assert.NotNull(searches);
+    }
+
+    [Fact]
+    public async Task SearchPaginatedJson()
+    {
+        var searches = await client.ApiClient.SearchPaginatedJson(1, "love", "ENGKJV", cancellationToken: TestContext.Current.CancellationToken);
         Assert.NotNull(searches);
     }
 }

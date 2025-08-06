@@ -11,23 +11,34 @@ namespace BibleBrainSharp;
 
 internal static class ApiExtensions
 {
+    private static readonly JsonSerializerOptions JsonSerializerOptions = new()
+    {
+        PropertyNameCaseInsensitive = true,
+    };
+
     public static async Task<T?> ExecuteAsync<T>(this HttpClient client, HttpRequest request, CancellationToken cancellationToken)
     {
         try
         {
-            var response = await client.GetAsync(request.ToString(), cancellationToken).ConfigureAwait(false);
+            var response = await client.SendAsync(request.ToRequestMessage(), cancellationToken).ConfigureAwait(false);
             if (response.IsSuccessStatusCode)
             {
-                var json = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                return JsonSerializer.Deserialize<T>(json, new JsonSerializerOptions
-                {
-                    PropertyNameCaseInsensitive = true,
-                });
+                var json =
+#if NET5_0_OR_GREATER
+                    await response.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
+#else
+                    await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+#endif
+                return JsonSerializer.Deserialize<T>(json, JsonSerializerOptions);
             }
             return default;
         }
-        catch (Exception ex)
+        catch
         {
+            if (request?.Options?.RethrowExceptions ?? false)
+            {
+                throw;
+            }
             return default;
         }
     }
@@ -36,16 +47,25 @@ internal static class ApiExtensions
     {
         try
         {
-            var response = await client.GetAsync(request.ToString(), cancellationToken).ConfigureAwait(false);
+            var response = await client.SendAsync(request.ToRequestMessage(), cancellationToken).ConfigureAwait(false);
             if (response.IsSuccessStatusCode)
             {
-                var json = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                var json =
+#if NET5_0_OR_GREATER
+                    await response.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
+#else
+                    await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+#endif
                 return json;
             }
             return default;
         }
-        catch (Exception ex)
+        catch
         {
+            if (request?.Options?.RethrowExceptions ?? false)
+            {
+                throw;
+            }
             return default;
         }
     }
@@ -93,20 +113,32 @@ internal static class ApiExtensions
     public static string ToQueryString(this NameValueCollection query)
     {
         var queryString = from key in query.AllKeys
-                          from value in query.GetValues(key)
+                          from value in query.GetValues(key) ?? []
                           select string.Format("{0}={1}", WebUtility.UrlEncode(key), WebUtility.UrlEncode(value));
         return string.Join("&", queryString);
     }
 }
 
-public class HttpRequest(string requestUri)
+internal class HttpRequest(string requestUri, BibleBrainClientOptions? options)
 {
     public string RequestUri { get; } = requestUri;
 
     public NameValueCollection Query { get; } = [];
 
+    public BibleBrainClientOptions? Options { get; } = options;
+
     public override string ToString()
     {
         return $"{RequestUri}?{Query.ToQueryString()}";
+    }
+
+    public HttpRequestMessage ToRequestMessage()
+    {
+        var request = new HttpRequestMessage(HttpMethod.Get, ToString());
+        if (Options is not null)
+        {
+            request.Headers.Add("key", Options.ApiKey);
+        }
+        return request;
     }
 }

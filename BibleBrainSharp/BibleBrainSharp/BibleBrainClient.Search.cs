@@ -8,10 +8,15 @@ namespace BibleBrainSharp;
 
 public partial class BibleBrainClient
 {
-    public async Task<IList<SearchResult>> Search(string query, string fileset_id, string[]? books = default, CancellationToken cancellationToken = default)
+    public async Task<IList<SearchResult>> Search(
+        string query,
+        string fileset_id,
+        string[]? books = default,
+        BibleBrainClientOptions? options = null,
+        CancellationToken cancellationToken = default)
     {
         var searches = new List<SearchResult>();
-        var request = new HttpRequest(ApiEndpoints.Search);
+        var request = new HttpRequest(ApiEndpoints.Search, options);
         request.Query.AddRequiredParameter(nameof(query), query);
         request.Query.AddRequiredParameter(nameof(fileset_id), fileset_id);
         request.Query.AddRequiredParameter("limit", 1000);
@@ -56,9 +61,15 @@ public partial class BibleBrainClient
         return searches;
     }
 
-    private static HttpRequest SearchPaginatedRequest(int page, string query, string fileset_id, string[]? books = null, int limit = 1000)
+    private static HttpRequest SearchPaginatedRequest(
+        int page,
+        string query,
+        string fileset_id,
+        string[]? books,
+        int limit,
+        BibleBrainClientOptions? options)
     {
-        var request = new HttpRequest(ApiEndpoints.Search);
+        var request = new HttpRequest(ApiEndpoints.Search, options);
         request.Query.AddRequiredParameter(nameof(page), page);
         request.Query.AddRequiredParameter(nameof(query), query);
         request.Query.AddRequiredParameter(nameof(fileset_id), fileset_id);
@@ -67,16 +78,30 @@ public partial class BibleBrainClient
         return request;
     }
 
-    public async Task<SearchResult?> SearchPaginated(int page, string query, string fileset_id, string[]? books = null, int limit = 1000, CancellationToken cancellationToken = default)
+    public async Task<SearchResult?> SearchPaginated(
+        int page,
+        string query,
+        string fileset_id,
+        string[]? books = null,
+        int limit = 1000,
+        BibleBrainClientOptions? options = null,
+        CancellationToken cancellationToken = default)
     {
-        var request = SearchPaginatedRequest(page, query, fileset_id, books, limit);
+        var request = SearchPaginatedRequest(page, query, fileset_id, books, limit, options);
         var response = await httpClient.ExecuteAsync<SearchResult>(request, cancellationToken).ConfigureAwait(false);
         return response;
     }
 
-    public async Task<string?> SearchPaginatedJson(int page, string query, string fileset_id, string[]? books = null, int limit = 1000, CancellationToken cancellationToken = default)
+    public async Task<string?> SearchPaginatedJson(
+        int page,
+        string query,
+        string fileset_id,
+        string[]? books = null,
+        int limit = 1000,
+        BibleBrainClientOptions? options = null,
+        CancellationToken cancellationToken = default)
     {
-        var request = SearchPaginatedRequest(page, query, fileset_id, books, limit);
+        var request = SearchPaginatedRequest(page, query, fileset_id, books, limit, options);
         var response = await httpClient.ExecuteJsonAsync(request, cancellationToken).ConfigureAwait(false);
         return response;
     }
