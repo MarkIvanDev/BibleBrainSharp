@@ -10,10 +10,11 @@ namespace BibleBrainSharp.Models;
 
 public class DefaultEnumConverter<TEnum> : JsonConverter<TEnum> where TEnum : struct, Enum
 {
+    public override bool HandleNull => true;
+
     public override TEnum Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
-        if (reader.TokenType == JsonTokenType.Null ||
-            (reader.TokenType == JsonTokenType.String && string.IsNullOrWhiteSpace(reader.GetString())))
+        if (reader.TokenType == JsonTokenType.Null)
         {
             return default;
         }
@@ -22,7 +23,18 @@ public class DefaultEnumConverter<TEnum> : JsonConverter<TEnum> where TEnum : st
         {
             var enumText = reader.GetString();
 
-            foreach (TEnum enumValue in Enum.GetValues(typeof(TEnum)))
+            if (string.IsNullOrWhiteSpace(enumText))
+            {
+                return default;
+            }
+
+            var enums =
+#if NET5_0_OR_GREATER
+                Enum.GetValues<TEnum>();
+#else
+                (TEnum[])Enum.GetValues(typeof(TEnum));
+#endif
+            foreach (TEnum enumValue in enums)
             {
                 var memberInfo = typeof(TEnum).GetMember(enumValue.ToString())[0];
                 var attribute = memberInfo.GetCustomAttribute<JsonStringEnumMemberNameAttribute>();
@@ -60,6 +72,7 @@ public class DefaultEnumConverter<TEnum> : JsonConverter<TEnum> where TEnum : st
 
 
 public class DictionaryOrEmptyArrayConverter<K, V> : JsonConverter<Dictionary<K, V>?>
+    where K : notnull
 {
     public override Dictionary<K, V>? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {

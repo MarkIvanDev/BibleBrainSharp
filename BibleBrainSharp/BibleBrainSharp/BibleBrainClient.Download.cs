@@ -7,10 +7,12 @@ namespace BibleBrainSharp;
 
 public partial class BibleBrainClient
 {
-    public async Task<IList<DownloadableFileset>> GetDownloadableFilesets(CancellationToken cancellationToken = default)
+    public async Task<IList<DownloadableFileset>> GetDownloadableFilesets(
+        BibleBrainClientOptions? options = null,
+        CancellationToken cancellationToken = default)
     {
         var filesets = new List<DownloadableFileset>();
-        var request = new HttpRequest(ApiEndpoints.DownloadList);
+        var request = new HttpRequest(ApiEndpoints.DownloadList, options);
 
         int currentPage;
         int totalPages;
@@ -38,38 +40,59 @@ public partial class BibleBrainClient
         return filesets;
     }
 
-    private static HttpRequest GetDownloadableFilesetsPaginatedRequest(int page, int? limit = null)
+    private static HttpRequest GetDownloadableFilesetsPaginatedRequest(
+        int page,
+        int? limit,
+        BibleBrainClientOptions? options)
     {
-        var request = new HttpRequest(ApiEndpoints.DownloadList);
+        var request = new HttpRequest(ApiEndpoints.DownloadList, options);
         request.Query.AddRequiredParameter(nameof(page), page);
         request.Query.AddOptionalParameter(nameof(limit), limit);
         return request;
     }
 
-    public async Task<DownloadableFilesetResult?> GetDownloadableFilesetsPaginated(int page, int? limit = null, CancellationToken cancellationToken = default)
+    public async Task<DownloadableFilesetResult?> GetDownloadableFilesetsPaginated(
+        int page,
+        int? limit = null,
+        BibleBrainClientOptions? options = null,
+        CancellationToken cancellationToken = default)
     {
-        var request = GetDownloadableFilesetsPaginatedRequest(page, limit);
+        var request = GetDownloadableFilesetsPaginatedRequest(page, limit, options);
         var response = await httpClient.ExecuteAsync<DownloadableFilesetResult>(request, cancellationToken).ConfigureAwait(false);
         return response;
     }
 
-    public async Task<string?> GetDownloadableFilesetsPaginatedJson(int page, int? limit = null, CancellationToken cancellationToken = default)
+    public async Task<string?> GetDownloadableFilesetsPaginatedJson(
+        int page,
+        int? limit = null,
+        BibleBrainClientOptions? options = null,
+        CancellationToken cancellationToken = default)
     {
-        var request = GetDownloadableFilesetsPaginatedRequest(page, limit);
+        var request = GetDownloadableFilesetsPaginatedRequest(page, limit, options);
         var response = await httpClient.ExecuteJsonAsync(request, cancellationToken).ConfigureAwait(false);
         return response;
     }
 
-    public async Task<DownloadContentResult?> GetDownloadContent(string filesetId, string bookId, int? chapter = null, CancellationToken cancellationToken = default)
+    public async Task<DownloadContentResult?> GetDownloadContent(
+        string filesetId,
+        string bookId,
+        int? chapter = null,
+        BibleBrainClientOptions? options = null,
+        CancellationToken cancellationToken = default)
     {
-        var request = new HttpRequest(ApiEndpoints.GetDownload(filesetId, bookId, chapter));
+        var request = new HttpRequest(ApiEndpoints.GetDownload(filesetId, bookId, chapter), options);
         var response = await httpClient.ExecuteAsync<DownloadContentResult>(request, cancellationToken).ConfigureAwait(false);
         return response;
     }
 
-    public async Task<string?> GetDownloadContentJson(string filesetId, string bookId, int? chapter = null, CancellationToken cancellationToken = default)
+    public async Task<string?> GetDownloadContentJson(
+        string filesetId,
+        string bookId,
+        int? chapter = null,
+        BibleBrainClientOptions? options = null,
+        CancellationToken cancellationToken = default)
     {
-        var request = new HttpRequest(ApiEndpoints.GetDownload(filesetId, bookId, chapter));
+        var request = new HttpRequest(ApiEndpoints.GetDownload(filesetId, bookId, chapter), options);
         var response = await httpClient.ExecuteJsonAsync(request, cancellationToken).ConfigureAwait(false);
         return response;
     }
