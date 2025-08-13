@@ -16,14 +16,14 @@ public class BibleTests(Client client)
     [Fact]
     public async Task GetBiblesPaginated()
     {
-        var bibles = await client.ApiClient.GetBiblesPaginated(1, cancellationToken: TestContext.Current.CancellationToken);
+        var bibles = await client.ApiClient.GetBiblesPaginated(page: 1, cancellationToken: TestContext.Current.CancellationToken);
         Assert.NotNull(bibles?.Data);
     }
 
     [Fact]
     public async Task GetBiblesPaginatedJson()
     {
-        var bibles = await client.ApiClient.GetBiblesPaginatedJson(1, cancellationToken: TestContext.Current.CancellationToken);
+        var bibles = await client.ApiClient.GetBiblesPaginatedJson(page: 1, cancellationToken: TestContext.Current.CancellationToken);
         Assert.NotNull(bibles);
     }
 
@@ -136,14 +136,14 @@ public class BibleTests(Client client)
     [Fact]
     public async Task GetVersesByLanguagePaginated()
     {
-        var verses = await client.ApiClient.GetVersesByLanguagePaginated(1, "eng", "MAT", 1, cancellationToken: TestContext.Current.CancellationToken);
+        var verses = await client.ApiClient.GetVersesByLanguagePaginated("eng", "MAT", 1, page: 1, cancellationToken: TestContext.Current.CancellationToken);
         Assert.NotNull(verses);
     }
 
     [Fact]
     public async Task GetVersesByLanguagePaginatedJson()
     {
-        var verses = await client.ApiClient.GetVersesByLanguagePaginatedJson(1, "eng", "MAT", 1, cancellationToken: TestContext.Current.CancellationToken);
+        var verses = await client.ApiClient.GetVersesByLanguagePaginatedJson("eng", "MAT", 1, page: 1, cancellationToken: TestContext.Current.CancellationToken);
         Assert.NotNull(verses);
     }
 
@@ -157,14 +157,14 @@ public class BibleTests(Client client)
     [Fact]
     public async Task GetVersesByVersionPaginated()
     {
-        var verses = await client.ApiClient.GetVersesByVersionPaginated(1, "ENGKJV", "MAT", 1, cancellationToken: TestContext.Current.CancellationToken);
+        var verses = await client.ApiClient.GetVersesByVersionPaginated("ENGKJV", "MAT", 1, page: 1, cancellationToken: TestContext.Current.CancellationToken);
         Assert.NotNull(verses);
     }
 
     [Fact]
     public async Task GetVersesByVersionPaginatedJson()
     {
-        var verses = await client.ApiClient.GetVersesByVersionPaginatedJson(1, "ENGKJV", "MAT", 1, cancellationToken: TestContext.Current.CancellationToken);
+        var verses = await client.ApiClient.GetVersesByVersionPaginatedJson("ENGKJV", "MAT", 1, page: 1, cancellationToken: TestContext.Current.CancellationToken);
         Assert.NotNull(verses);
     }
 
@@ -178,14 +178,14 @@ public class BibleTests(Client client)
     [Fact]
     public async Task SearchBiblesByVersionPaginated()
     {
-        var bibles = await client.ApiClient.SearchBiblesByVersionPaginated(1, "KJV", cancellationToken: TestContext.Current.CancellationToken);
+        var bibles = await client.ApiClient.SearchBiblesByVersionPaginated("KJV", page: 1, cancellationToken: TestContext.Current.CancellationToken);
         Assert.NotNull(bibles);
     }
 
     [Fact]
     public async Task SearchBiblesByVersionPaginatedJson()
     {
-        var bibles = await client.ApiClient.SearchBiblesByVersionPaginatedJson(1, "KJV", cancellationToken: TestContext.Current.CancellationToken);
+        var bibles = await client.ApiClient.SearchBiblesByVersionPaginatedJson("KJV", page: 1, cancellationToken: TestContext.Current.CancellationToken);
         Assert.NotNull(bibles);
     }
 
@@ -199,14 +199,14 @@ public class BibleTests(Client client)
     [Fact]
     public async Task SearchBiblesPaginated()
     {
-        var bibles = await client.ApiClient.SearchBiblesPaginated(1, "king", cancellationToken: TestContext.Current.CancellationToken);
+        var bibles = await client.ApiClient.SearchBiblesPaginated("king", page: 1, cancellationToken: TestContext.Current.CancellationToken);
         Assert.NotNull(bibles);
     }
 
     [Fact]
     public async Task SearchBiblesPaginatedJson()
     {
-        var bibles = await client.ApiClient.SearchBiblesPaginatedJson(1, "king", cancellationToken: TestContext.Current.CancellationToken);
+        var bibles = await client.ApiClient.SearchBiblesPaginatedJson("king", page: 1, cancellationToken: TestContext.Current.CancellationToken);
         Assert.NotNull(bibles);
     }
 
