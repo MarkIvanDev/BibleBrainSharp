@@ -17,14 +17,14 @@ public class CountryTests(Client client)
     [Fact]
     public async Task GetCountriesPaginated()
     {
-        var countries = await client.ApiClient.GetCountriesPaginated(1, cancellationToken: TestContext.Current.CancellationToken);
+        var countries = await client.ApiClient.GetCountriesPaginated(page: 1, cancellationToken: TestContext.Current.CancellationToken);
         Assert.NotNull(countries);
     }
 
     [Fact]
     public async Task GetCountriesPaginatedJson()
     {
-        var countries = await client.ApiClient.GetCountriesPaginatedJson(1, cancellationToken: TestContext.Current.CancellationToken);
+        var countries = await client.ApiClient.GetCountriesPaginatedJson(page: 1, cancellationToken: TestContext.Current.CancellationToken);
         Assert.NotNull(countries);
     }
 
@@ -54,14 +54,14 @@ public class CountryTests(Client client)
     [Fact]
     public async Task SearchCountriesPaginated()
     {
-        var countries = await client.ApiClient.SearchCountriesPaginated(1, "south", cancellationToken: TestContext.Current.CancellationToken);
+        var countries = await client.ApiClient.SearchCountriesPaginated("south", page: 1, cancellationToken: TestContext.Current.CancellationToken);
         Assert.NotNull(countries);
     }
 
     [Fact]
     public async Task SearchCountriesPaginatedJson()
     {
-        var countries = await client.ApiClient.SearchCountriesPaginatedJson(1, "south", cancellationToken: TestContext.Current.CancellationToken);
+        var countries = await client.ApiClient.SearchCountriesPaginatedJson("south", page: 1, cancellationToken: TestContext.Current.CancellationToken);
         Assert.NotNull(countries);
     }
 }

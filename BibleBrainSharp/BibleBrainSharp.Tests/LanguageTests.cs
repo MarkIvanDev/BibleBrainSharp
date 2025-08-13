@@ -16,14 +16,14 @@ public class LanguageTests(Client client)
     [Fact]
     public async Task GetLanguagesPaginated()
     {
-        var languages = await client.ApiClient.GetLanguagesPaginated(1, cancellationToken: TestContext.Current.CancellationToken);
+        var languages = await client.ApiClient.GetLanguagesPaginated(page: 1, cancellationToken: TestContext.Current.CancellationToken);
         Assert.NotNull(languages);
     }
 
     [Fact]
     public async Task GetLanguagesPaginatedJson()
     {
-        var languages = await client.ApiClient.GetLanguagesPaginatedJson(1, cancellationToken: TestContext.Current.CancellationToken);
+        var languages = await client.ApiClient.GetLanguagesPaginatedJson(page: 1, cancellationToken: TestContext.Current.CancellationToken);
         Assert.NotNull(languages);
     }
 
@@ -51,14 +51,14 @@ public class LanguageTests(Client client)
     [Fact]
     public async Task SearchLanguagesPaginated()
     {
-        var languages = await client.ApiClient.SearchLanguagesPaginated(1, "tagalog", cancellationToken: TestContext.Current.CancellationToken);
+        var languages = await client.ApiClient.SearchLanguagesPaginated("tagalog", page: 1, cancellationToken: TestContext.Current.CancellationToken);
         Assert.NotNull(languages);
     }
 
     [Fact]
     public async Task SearchLanguagesPaginatedJson()
     {
-        var languages = await client.ApiClient.SearchLanguagesPaginatedJson(1, "tagalog", cancellationToken: TestContext.Current.CancellationToken);
+        var languages = await client.ApiClient.SearchLanguagesPaginatedJson("tagalog", page: 1, cancellationToken: TestContext.Current.CancellationToken);
         Assert.NotNull(languages);
     }
 }

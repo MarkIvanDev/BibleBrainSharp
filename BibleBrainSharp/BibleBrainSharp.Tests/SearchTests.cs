@@ -16,14 +16,14 @@ public class SearchTests(Client client)
     [Fact]
     public async Task SearchPaginated()
     {
-        var searches = await client.ApiClient.SearchPaginated(1, "love", "ENGKJV", cancellationToken: TestContext.Current.CancellationToken);
+        var searches = await client.ApiClient.SearchPaginated("love", "ENGKJV", page: 1, cancellationToken: TestContext.Current.CancellationToken);
         Assert.NotNull(searches);
     }
 
     [Fact]
     public async Task SearchPaginatedJson()
     {
-        var searches = await client.ApiClient.SearchPaginatedJson(1, "love", "ENGKJV", cancellationToken: TestContext.Current.CancellationToken);
+        var searches = await client.ApiClient.SearchPaginatedJson("love", "ENGKJV", page: 1, cancellationToken: TestContext.Current.CancellationToken);
         Assert.NotNull(searches);
     }
 }

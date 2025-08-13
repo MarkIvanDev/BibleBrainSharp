@@ -52,23 +52,23 @@ public partial class BibleBrainClient
     }
 
     public async Task<DownloadableFilesetResult?> GetDownloadableFilesetsPaginated(
-        int page,
+        int? page = null,
         int? limit = null,
         BibleBrainClientOptions? options = null,
         CancellationToken cancellationToken = default)
     {
-        var request = GetDownloadableFilesetsPaginatedRequest(page, limit, options);
+        var request = GetDownloadableFilesetsPaginatedRequest(page ?? 1, limit, options);
         var response = await httpClient.ExecuteAsync<DownloadableFilesetResult>(request, cancellationToken).ConfigureAwait(false);
         return response;
     }
 
     public async Task<string?> GetDownloadableFilesetsPaginatedJson(
-        int page,
+        int? page = null,
         int? limit = null,
         BibleBrainClientOptions? options = null,
         CancellationToken cancellationToken = default)
     {
-        var request = GetDownloadableFilesetsPaginatedRequest(page, limit, options);
+        var request = GetDownloadableFilesetsPaginatedRequest(page ?? 1, limit, options);
         var response = await httpClient.ExecuteJsonAsync(request, cancellationToken).ConfigureAwait(false);
         return response;
     }

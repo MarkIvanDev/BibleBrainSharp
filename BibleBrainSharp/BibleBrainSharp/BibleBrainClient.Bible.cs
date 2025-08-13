@@ -53,59 +53,59 @@ public partial class BibleBrainClient
     }
 
     private static HttpRequest GetBiblesPaginatedRequest(
-        int page,
         string? language_code,
         string? asset_id,
         MediaType? media,
         MediaType? media_exclude,
         FilesetSize? size,
         FilesetSize? size_exclude,
+        int page,
         int? limit,
         BibleBrainClientOptions? options)
     {
         var request = new HttpRequest(ApiEndpoints.Bibles, options);
-        request.Query.AddRequiredParameter(nameof(page), page);
-        request.Query.AddOptionalParameter(nameof(limit), limit);
         request.Query.AddOptionalParameter(nameof(language_code), language_code);
         request.Query.AddOptionalParameter(nameof(asset_id), asset_id);
         request.Query.AddOptionalParameter(nameof(media), media?.GetValue());
         request.Query.AddOptionalParameter(nameof(media_exclude), media_exclude?.GetValue());
         request.Query.AddOptionalParameter(nameof(size), size?.GetValue());
         request.Query.AddOptionalParameter(nameof(size_exclude), size_exclude?.GetValue());
+        request.Query.AddRequiredParameter(nameof(page), page);
+        request.Query.AddOptionalParameter(nameof(limit), limit);
 
         return request;
     }
 
     public async Task<BiblesResult?> GetBiblesPaginated(
-        int page,
         string? language_code = null,
         string? asset_id = null,
         MediaType? media = null,
         MediaType? media_exclude = null,
         FilesetSize? size = null,
         FilesetSize? size_exclude = null,
+        int? page = null,
         int? limit = null,
         BibleBrainClientOptions? options = null,
         CancellationToken cancellationToken = default)
     {
-        var request = GetBiblesPaginatedRequest(page, language_code, asset_id, media, media_exclude, size, size_exclude, limit, options);
+        var request = GetBiblesPaginatedRequest(language_code, asset_id, media, media_exclude, size, size_exclude, page ?? 1, limit, options);
         var response = await httpClient.ExecuteAsync<BiblesResult>(request, cancellationToken).ConfigureAwait(false);
         return response;
     }
 
     public async Task<string?> GetBiblesPaginatedJson(
-        int page,
         string? language_code = null,
         string? asset_id = null,
         MediaType? media = null,
         MediaType? media_exclude = null,
         FilesetSize? size = null,
         FilesetSize? size_exclude = null,
+        int? page = null,
         int? limit = null,
         BibleBrainClientOptions? options = null,
         CancellationToken cancellationToken = default)
     {
-        var request = GetBiblesPaginatedRequest(page, language_code, asset_id, media, media_exclude, size, size_exclude, limit, options);
+        var request = GetBiblesPaginatedRequest(language_code, asset_id, media, media_exclude, size, size_exclude, page ?? 1, limit, options);
         var response = await httpClient.ExecuteJsonAsync(request, cancellationToken).ConfigureAwait(false);
         return response;
     }
@@ -268,11 +268,11 @@ public partial class BibleBrainClient
     }
 
     private static HttpRequest GetVersesByLanguagePaginatedRequest(
-        int page,
         string languageCode,
         string bookId,
         int chapter,
         int? verse,
+        int page,
         int? limit,
         BibleBrainClientOptions? options)
     {
@@ -283,31 +283,31 @@ public partial class BibleBrainClient
     }
 
     public async Task<VerseByLanguageResult?> GetVersesByLanguagePaginated(
-        int page,
         string languageCode,
         string bookId,
         int chapter,
         int? verse = null,
+        int? page = null,
         int? limit = null,
         BibleBrainClientOptions? options = null,
         CancellationToken cancellationToken = default)
     {
-        var request = GetVersesByLanguagePaginatedRequest(page, languageCode, bookId, chapter, verse, limit, options);
+        var request = GetVersesByLanguagePaginatedRequest(languageCode, bookId, chapter, verse, page ?? 1, limit, options);
         var response = await httpClient.ExecuteAsync<VerseByLanguageResult>(request, cancellationToken).ConfigureAwait(false);
         return response;
     }
 
     public async Task<string?> GetVersesByLanguagePaginatedJson(
-        int page,
         string languageCode,
         string bookId,
         int chapter,
         int? verse = null,
+        int? page = null,
         int? limit = null,
         BibleBrainClientOptions? options = null,
         CancellationToken cancellationToken = default)
     {
-        var request = GetVersesByLanguagePaginatedRequest(page, languageCode, bookId, chapter, verse, limit, options);
+        var request = GetVersesByLanguagePaginatedRequest(languageCode, bookId, chapter, verse, page ?? 1, limit, options);
         var response = await httpClient.ExecuteJsonAsync(request, cancellationToken).ConfigureAwait(false);
         return response;
     }
@@ -350,11 +350,11 @@ public partial class BibleBrainClient
     }
 
     private static HttpRequest GetVersesByVersionPaginatedRequest(
-        int page,
         string bibleId,
         string bookId,
         int chapter,
         int? verse,
+        int page,
         int? limit,
         BibleBrainClientOptions? options)
     {
@@ -365,31 +365,31 @@ public partial class BibleBrainClient
     }
 
     public async Task<VerseByVersionResult?> GetVersesByVersionPaginated(
-        int page,
         string bibleId,
         string bookId,
         int chapter,
         int? verse = null,
+        int? page = null,
         int? limit = null,
         BibleBrainClientOptions? options = null,
         CancellationToken cancellationToken = default)
     {
-        var request = GetVersesByVersionPaginatedRequest(page, bibleId, bookId, chapter, verse, limit, options);
+        var request = GetVersesByVersionPaginatedRequest(bibleId, bookId, chapter, verse, page ?? 1, limit, options);
         var response = await httpClient.ExecuteAsync<VerseByVersionResult>(request, cancellationToken).ConfigureAwait(false);
         return response;
     }
 
     public async Task<string?> GetVersesByVersionPaginatedJson(
-        int page,
         string bibleId,
         string bookId,
         int chapter,
         int? verse = null,
+        int? page = null,
         int? limit = null,
         BibleBrainClientOptions? options = null,
         CancellationToken cancellationToken = default)
     {
-        var request = GetVersesByVersionPaginatedRequest(page, bibleId, bookId, chapter, verse, limit, options);
+        var request = GetVersesByVersionPaginatedRequest(bibleId, bookId, chapter, verse, page ?? 1, limit, options);
         var response = await httpClient.ExecuteJsonAsync(request, cancellationToken).ConfigureAwait(false);
         return response;
     }
@@ -430,38 +430,38 @@ public partial class BibleBrainClient
     }
 
     private static HttpRequest SearchBiblesByVersionPaginatedRequest(
-        int page,
         string version,
+        int page,
         int? limit,
         BibleBrainClientOptions? options)
     {
         var request = new HttpRequest(ApiEndpoints.BibleSearch, options);
-        request.Query.AddRequiredParameter(nameof(page), page);
         request.Query.AddRequiredParameter(nameof(version), version);
+        request.Query.AddRequiredParameter(nameof(page), page);
         request.Query.AddOptionalParameter(nameof(limit), limit);
         return request;
     }
 
     public async Task<BibleSearchByVersionResult?> SearchBiblesByVersionPaginated(
-        int page,
         string version,
+        int? page = null,
         int? limit = null,
         BibleBrainClientOptions? options = null,
         CancellationToken cancellationToken = default)
     {
-        var request = SearchBiblesByVersionPaginatedRequest(page, version, limit, options);
+        var request = SearchBiblesByVersionPaginatedRequest(version, page ?? 1, limit, options);
         var response = await httpClient.ExecuteAsync<BibleSearchByVersionResult>(request, cancellationToken).ConfigureAwait(false);
         return response;
     }
 
     public async Task<string?> SearchBiblesByVersionPaginatedJson(
-        int page,
         string version,
+        int? page = null,
         int? limit = null,
         BibleBrainClientOptions? options = null,
         CancellationToken cancellationToken = default)
     {
-        var request = SearchBiblesByVersionPaginatedRequest(page, version, limit, options);
+        var request = SearchBiblesByVersionPaginatedRequest(version, page ?? 1, limit, options);
         var response = await httpClient.ExecuteJsonAsync(request, cancellationToken).ConfigureAwait(false);
         return response;
     }
@@ -501,8 +501,8 @@ public partial class BibleBrainClient
     }
 
     private static HttpRequest SearchBiblesPaginatedRequest(
-        int page,
         string searchText,
+        int page,
         int? limit,
         BibleBrainClientOptions? options)
     {
@@ -513,25 +513,25 @@ public partial class BibleBrainClient
     }
 
     public async Task<BibleSearchResult?> SearchBiblesPaginated(
-        int page,
         string searchText,
+        int? page = null,
         int? limit = null,
         BibleBrainClientOptions? options = null,
         CancellationToken cancellationToken = default)
     {
-        var request = SearchBiblesPaginatedRequest(page, searchText, limit, options);
+        var request = SearchBiblesPaginatedRequest(searchText, page ?? 1, limit, options);
         var response = await httpClient.ExecuteAsync<BibleSearchResult>(request, cancellationToken).ConfigureAwait(false);
         return response;
     }
 
     public async Task<string?> SearchBiblesPaginatedJson(
-        int page,
         string searchText,
+        int? page = null,
         int? limit = null,
         BibleBrainClientOptions? options = null,
         CancellationToken cancellationToken = default)
     {
-        var request = SearchBiblesPaginatedRequest(page, searchText, limit, options);
+        var request = SearchBiblesPaginatedRequest(searchText, page ?? 1, limit, options);
         var response = await httpClient.ExecuteJsonAsync(request, cancellationToken).ConfigureAwait(false);
         return response;
     }
